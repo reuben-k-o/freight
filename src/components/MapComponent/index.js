@@ -45,6 +45,23 @@ export default function MapComponent() {
             }}
           ></Marker>
         ))}
+
+        {/* <Polyline
+          coordinates={[
+            { latitude: 0.32365, longitude: 34.2851 },
+            { latitude: 0.0737, longitude: 35.18519 },
+          ]}
+          strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+          strokeColors={[
+            "#7F0000",
+            "#00000000", // no color, creates a "long" gradient between the previous and next coordinate
+            // "#B24112",
+            // "#E5845C",
+            // "#238C23",
+            // "#7F0000",
+          ]}
+          strokeWidth={6}
+        /> */}
       </MapView>
     </View>
   );

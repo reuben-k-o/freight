@@ -43,6 +43,7 @@ const HomeScreen = ({ navigation }) => {
       const {
         coords: { latitude, longitude },
       } = await Location.getCurrentPositionAsync();
+      console.log(`checking location ${latitude}, ${longitude}`);
       setLatlng({ latitude: latitude, longitude: longitude });
     } catch (e) {}
   };
