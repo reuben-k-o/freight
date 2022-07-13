@@ -128,10 +128,10 @@ export const availableServices = [
 ];
 
 export const carsAround = [
-  { latitude: 0.29365, longitude: 35.2851 },
-  { latitude: 0.2937, longitude: 35.28519 },
-  { latitude: 0.293665, longitude: 35.285188 },
-  { latitude: 0.29369, longitude: 35.285178 },
-  { latitude: 0.29368, longitude: 35.28515 },
-  { latitude: -6.186549, longitude: 106.780093 },
+  { latitude: 0.32365, longitude: 34.2851 },
+  { latitude: 0.0737, longitude: 35.18519 },
+  { latitude: 0.303665, longitude: 36.285188 },
+  { latitude: 0.41369, longitude: 36.085178 },
+  { latitude: 0.53368, longitude: 35.28515 },
+  // { latitude: -6.186549, longitude: 106.780093 },
 ];

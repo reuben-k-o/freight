@@ -15,18 +15,18 @@ import RNLocation from "react-native-location";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-RNLocation.configure({
-  distanceFilter: 100, // Meters
-  desiredAccuracy: {
-    ios: "best",
-    android: "balancedPowerAccuracy",
-  },
-  // Android only
-  androidProvider: "auto",
-  interval: 5000, // Milliseconds
-  fastestInterval: 10000, // Milliseconds
-  maxWaitTime: 5000, // Milliseconds
-});
+// RNLocation.configure({
+//   distanceFilter: 100, // Meters
+//   desiredAccuracy: {
+//     ios: "best",
+//     android: "balancedPowerAccuracy",
+//   },
+//   // Android only
+//   androidProvider: "auto",
+//   interval: 5000, // Milliseconds
+//   fastestInterval: 10000, // Milliseconds
+//   maxWaitTime: 5000, // Milliseconds
+// });
 
 const DestinationScreen = ({ navigation }) => {
   const textInput1 = useRef(4);
