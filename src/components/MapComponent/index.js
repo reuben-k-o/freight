@@ -1,4 +1,4 @@
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { Component, useRef, useState } from "react";
 import MapView, {
   PROVIDER_GOOGLE,
@@ -7,6 +7,7 @@ import MapView, {
   Callout,
 } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_APIKEY, GOOGLE_PLACES_APIKEY } from "@env";
 import Constants from "expo-constants";
 import { mapStyle } from "../../global/mapStyle";
@@ -81,6 +82,14 @@ export default function MapComponent() {
         {origin && <Marker coordinate={origin} />}
         {destination && <Marker coordinate={destination} />}
 
+        <MapViewDirections
+          origin={origin}
+          destination={destination}
+          apikey={GOOGLE_PLACES_APIKEY}
+          strokeColor="#6644ff"
+          strokeWidth={6}
+        />
+
         {/* {carsAround.map((marker) => (
           <Marker
             key={marker.latitude}
@@ -125,6 +134,8 @@ const styles = StyleSheet.create({
   compContainer: {
     marginVertical: 10,
   },
+  button: {},
+  buttonText: {},
   searchContainer: {
     position: "absolute",
     width: "90%",
