@@ -15,21 +15,19 @@ import { carsAround } from "../../global/data";
 
 export const GooglePlacesInput = ({ placeholder, onPlaceSelected }) => {
   return (
-    <View style={styles.searchContainer}>
-      <GooglePlacesAutocomplete
-        placeholder={placeholder}
-        fetchDetails
-        styles={{ textInput: styles.inputText }}
-        onPress={(data, details = null) => {
-          onPlaceSelected(details);
-        }}
-        query={{
-          key: GOOGLE_PLACES_APIKEY,
-          language: "en",
-        }}
-        currentLocation={true}
-      />
-    </View>
+    <GooglePlacesAutocomplete
+      placeholder={placeholder}
+      fetchDetails
+      styles={{ textInput: styles.inputText }}
+      onPress={(data, details = null) => {
+        onPlaceSelected(details);
+      }}
+      query={{
+        key: GOOGLE_PLACES_APIKEY,
+        language: "en",
+      }}
+      currentLocation={true}
+    />
   );
 };
 
@@ -60,10 +58,12 @@ export default function MapComponent() {
   };
 
   const INITIAL_POSITION = {
-    latitude: 0.29365,
-    longitude: 35.2851,
-    latitudeDelta: 5.9,
-    longitudeDelta: 2.0,
+    latitude: 0.5143,
+    longitude: 35.2698,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+    // latitudeDelta: 5.9,
+    // longitudeDelta: 2.0,
   };
   return (
     <View style={styles.container}>
@@ -71,7 +71,7 @@ export default function MapComponent() {
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
-        region={INITIAL_POSITION}
+        initialRegion={INITIAL_POSITION}
         // customMapStyle={mapStyle}
         showsUserLocation={true}
         followUserLocation={true}
@@ -96,23 +96,23 @@ export default function MapComponent() {
           ></Marker>
         ))}
       </MapView>
-      <GooglePlacesInput
-        placeholder="Origin"
-        onPlaceSelected={(details = null) => {
-          onPlaceSelected(details, "origin");
-          // 'details' is provided when fetchDetails = true
-          console.log(details);
-        }}
-      />
-      <View style={styles.compContainer}>
+      <View style={styles.searchContainer}>
         <GooglePlacesInput
-          placeholder="Destination"
-          onPlaceSelected={(data, details = null) => {
+          placeholder="Origin"
+          onPlaceSelected={(details = null) => {
+            onPlaceSelected(details, "origin");
             // 'details' is provided when fetchDetails = true
-            onPlaceSelected(details, "destination");
-            console.log(data, details);
           }}
         />
+        <View style={styles.compContainer}>
+          <GooglePlacesInput
+            placeholder="Destination"
+            onPlaceSelected={(details = null) => {
+              // 'details' is provided when fetchDetails = true
+              onPlaceSelected(details, "destination");
+            }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -128,21 +128,11 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   compContainer: {
-    marginTop: 80,
-    alignContent: "center",
-    alignItems: "center",
-    height: 30,
-    width: "100%",
-    position: "absolute",
+    marginVertical: 10,
   },
   searchContainer: {
     position: "absolute",
     width: "90%",
-    margin: 4,
-    backgroundColor: "white",
-    elevation: 6,
-    padding: 8,
-    borderRadius: 8,
     top: Constants.statusBarHeight,
   },
   searchContainerBelow: {
@@ -155,5 +145,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     top: Constants.statusBarHeight,
   },
-  inputText: {},
+  inputText: {
+    // borderWidth: 1,
+    borderRadius: 6,
+    elevation: 16,
+  },
 });
