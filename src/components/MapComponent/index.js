@@ -1,30 +1,58 @@
 import { Text, StyleSheet, View } from "react-native";
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import MapView, {
   PROVIDER_GOOGLE,
   Marker,
   Polyline,
   Callout,
 } from "react-native-maps";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { GOOGLE_MAPS_APIKEY, GOOGLE_PLACES_APIKEY } from "@env";
+import Constants from "expo-constants";
 import { mapStyle } from "../../global/mapStyle";
 
 import { carsAround } from "../../global/data";
 
-export default function MapComponent() {
+export const GooglePlacesInput = ({ placeholder, onPress }) => {
   return (
-    <View>
+    <View style={styles.searchContainer}>
+      <GooglePlacesAutocomplete
+        placeholder={placeholder}
+        styles={{ textInput: styles.inputText }}
+        onPress={onPress}
+        query={{
+          key: GOOGLE_PLACES_APIKEY,
+          language: "en",
+        }}
+        currentLocation={true}
+      />
+    </View>
+  );
+};
+
+export default function MapComponent() {
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+
+  const onPlaceSelected = (details, flag) => {
+    const set = flag === "origin" ? setOrigin : setDestination;
+  };
+
+  const INITIAL_POSITION = {
+    latitude: 0.29365,
+    longitude: 35.2851,
+    latitudeDelta: 5.9,
+    longitudeDelta: 2.0,
+  };
+  return (
+    <View style={styles.container}>
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
-        region={{
-          latitude: 0.29365,
-          longitude: 35.2851,
-          latitudeDelta: 5.9,
-          longitudeDelta: 2.0,
-        }}
+        region={INITIAL_POSITION}
         // customMapStyle={mapStyle}
-        // showsUserLocation={true}
-        // followUserLocation={true}
+        showsUserLocation={true}
+        followUserLocation={true}
         rotateEnabled={true}
         zoomEnabled={true}
       >
@@ -45,31 +73,63 @@ export default function MapComponent() {
             }}
           ></Marker>
         ))}
-
-        {/* <Polyline
-          coordinates={[
-            { latitude: 0.32365, longitude: 34.2851 },
-            { latitude: 0.0737, longitude: 35.18519 },
-          ]}
-          strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-          strokeColors={[
-            "#7F0000",
-            "#00000000", // no color, creates a "long" gradient between the previous and next coordinate
-            // "#B24112",
-            // "#E5845C",
-            // "#238C23",
-            // "#7F0000",
-          ]}
-          strokeWidth={6}
-        /> */}
       </MapView>
+      <GooglePlacesInput
+        placeholder="Origin"
+        onPress={(data, details = null) => {
+          // 'details' is provided when fetchDetails = true
+          console.log(data, details);
+        }}
+      />
+      <View style={styles.compContainer}>
+        <GooglePlacesInput
+          placeholder="Destination"
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+            console.log(data, details);
+          }}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignContent: "center",
+    alignItems: "center",
+  },
   map: {
     height: "100%",
     width: "100%",
   },
+  compContainer: {
+    marginTop: 80,
+    alignContent: "center",
+    alignItems: "center",
+    height: 30,
+    width: "100%",
+    position: "absolute",
+  },
+  searchContainer: {
+    position: "absolute",
+    width: "90%",
+    margin: 4,
+    backgroundColor: "white",
+    elevation: 6,
+    padding: 8,
+    borderRadius: 8,
+    top: Constants.statusBarHeight,
+  },
+  searchContainerBelow: {
+    position: "absolute",
+    width: "90%",
+    marginTop: 20,
+    backgroundColor: "white",
+    elevation: 6,
+    padding: 8,
+    borderRadius: 8,
+    top: Constants.statusBarHeight,
+  },
+  inputText: {},
 });

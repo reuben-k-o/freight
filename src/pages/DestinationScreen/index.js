@@ -10,7 +10,8 @@ import { colors, parameters } from "../../global/styles";
 import { Avatar, Icon } from "react-native-elements";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_MAPS_APIKEY } from "@env";
-import RNLocation from "react-native-location";
+import Constants from "expo-constants";
+// import RNLocation from "react-native-location";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -28,13 +29,34 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 //   maxWaitTime: 5000, // Milliseconds
 // });
 
+export const GooglePlacesInput = () => {
+  return (
+    <View style={styles.searchContainer}>
+      <GooglePlacesAutocomplete
+        placeholder="Destination"
+        styles={{ textInput: styles.inputText }}
+        onPress={(data, details = null) => {
+          // 'details' is provided when fetchDetails = true
+          console.log(data, details);
+        }}
+        query={{
+          key: GOOGLE_MAPS_APIKEY,
+          language: "en",
+        }}
+        currentLocation={true}
+      />
+    </View>
+  );
+};
+
 const DestinationScreen = ({ navigation }) => {
   const textInput1 = useRef(4);
   const textInput2 = useRef(5);
 
   return (
     <>
-      <View style={styles.view2}>
+      <GooglePlacesInput />
+      {/* <View style={styles.view2}>
         <View style={styles.view1}>
           <Icon
             type="material-community"
@@ -63,8 +85,8 @@ const DestinationScreen = ({ navigation }) => {
             </View>
           </View>
         </TouchableOpacity>
-      </View>
-      <GooglePlacesAutocomplete
+      </View> */}
+      {/* <GooglePlacesAutocomplete
         nearbyPlacesAPI="GooglePlacesSearch"
         placeholder="Going to..."
         listViewDisplayed="auto"
@@ -77,7 +99,7 @@ const DestinationScreen = ({ navigation }) => {
         autoFocus={true}
         styles={autoComplete}
         query={{ key: GOOGLE_MAPS_APIKEY, language: "en" }}
-      />
+      /> */}
     </>
   );
 };
@@ -92,6 +114,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingTop: parameters.statusBarHeight,
   },
+  searchContainer: {
+    position: "absolute",
+    width: "90%",
+    backgroundColor: "white",
+    elevation: 6,
+    padding: 8,
+    borderRadius: 8,
+    top: Constants.statusBarHeight,
+  },
+  inputText: {},
 
   view1: {
     position: "absolute",

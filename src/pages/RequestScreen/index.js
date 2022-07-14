@@ -10,9 +10,32 @@ import React from "react";
 import { colors, parameters } from "../../global/styles";
 import { MapComponent } from "../../components";
 import { Avatar, Icon } from "react-native-elements";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { GOOGLE_MAPS_APIKEY, GOOGLE_PLACES_APIKEY } from "@env";
+import Constants from "expo-constants";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
+
+// export const GooglePlacesInput = () => {
+//   return (
+//     <View style={styles.searchContainer}>
+//       <GooglePlacesAutocomplete
+//         placeholder="Destination"
+//         styles={{ textInput: styles.inputText }}
+//         onPress={(data, details = null) => {
+//           // 'details' is provided when fetchDetails = true
+//           console.log(data, details);
+//         }}
+//         query={{
+//           key: GOOGLE_PLACES_APIKEY,
+//           language: "en",
+//         }}
+//         currentLocation={true}
+//       />
+//     </View>
+//   );
+// };
 
 const RequestScreen = ({ navigation }) => {
   return (
@@ -27,7 +50,10 @@ const RequestScreen = ({ navigation }) => {
             onPress={() => navigation.goBack()}
           />
         </View>
-        <View style={styles.view2}>
+
+        {/* <GooglePlacesInput /> */}
+
+        {/* <View style={styles.view2}>
           <TouchableOpacity>
             <View style={styles.view3}>
               <Avatar
@@ -54,14 +80,16 @@ const RequestScreen = ({ navigation }) => {
             </View>
             <View style={{ marginVertical: -10 }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate("DestinationScreen")}>
+                onPress={() => navigation.navigate("DestinationScreen")}
+              >
                 <View style={styles.view6}>
                   <Text style={styles.text1}>From Where</Text>
                 </View>
               </TouchableOpacity>
               <View style={styles.view7}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("DestinationScreen")}>
+                  onPress={() => navigation.navigate("DestinationScreen")}
+                >
                   <View style={styles.view5}>
                     <Text style={styles.text10}>...</Text>
                   </View>
@@ -77,7 +105,7 @@ const RequestScreen = ({ navigation }) => {
               </View>
             </View>
           </View>
-        </View>
+        </View> */}
         <MapComponent />
       </View>
     </>
@@ -91,6 +119,16 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: parameters.statusBarHeight,
   },
+  searchContainer: {
+    position: "absolute",
+    width: "90%",
+    backgroundColor: "white",
+    elevation: 6,
+    padding: 8,
+    borderRadius: 8,
+    top: Constants.statusBarHeight,
+  },
+  inputText: {},
 
   container: {
     flex: 1,
