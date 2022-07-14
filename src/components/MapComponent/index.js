@@ -33,6 +33,10 @@ export const GooglePlacesInput = ({ placeholder, onPlaceSelected }) => {
 };
 
 export default function MapComponent() {
+  const [origin, setOrigin] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [distance, setDistance] = useState(0);
+  const [duration, setDuration] = useState(0);
   const mapRef = useRef(null);
 
   const moveTo = async (position) => {
@@ -44,8 +48,26 @@ export default function MapComponent() {
     }
   };
 
-  const [origin, setOrigin] = useState(null);
-  const [destination, setDestination] = useState(null);
+  const edgePaddingValue = 60;
+
+  const edgePadding = {
+    top: edgePaddingValue,
+    bottom: edgePaddingValue,
+    right: edgePaddingValue,
+    left: edgePaddingValue,
+  };
+  const traceRoute = () => {
+    if (origin && destination) {
+      mapRef.current.fitToCoordinates([origin, destination], { edgePadding });
+    }
+  };
+
+  const traceRouteOnReady = (args) => {
+    if (args) {
+      setDistance(args.distance);
+      setDuration(args.duration);
+    }
+  };
 
   const onPlaceSelected = (details, flag) => {
     const set = flag === "origin" ? setOrigin : setDestination;
@@ -81,6 +103,7 @@ export default function MapComponent() {
       >
         {origin && <Marker coordinate={origin} />}
         {destination && <Marker coordinate={destination} />}
+        {origin && destination && traceRoute()}
 
         <MapViewDirections
           origin={origin}
@@ -88,6 +111,7 @@ export default function MapComponent() {
           apikey={GOOGLE_PLACES_APIKEY}
           strokeColor="#6644ff"
           strokeWidth={6}
+          onReady={traceRouteOnReady}
         />
 
         {/* {carsAround.map((marker) => (
@@ -117,6 +141,12 @@ export default function MapComponent() {
             }}
           />
         </View>
+        {duration && distance ? (
+          <View>
+            <Text>Distance : {distance.toFixed(2)} km</Text>
+            <Text>Duration : {Math.ceil(duration)} min</Text>
+          </View>
+        ) : null}
       </View>
     </View>
   );
