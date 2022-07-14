@@ -1,5 +1,5 @@
 import { Text, StyleSheet, View } from "react-native";
-import React, { Component, useState } from "react";
+import React, { Component, useRef, useState } from "react";
 import MapView, {
   PROVIDER_GOOGLE,
   Marker,
@@ -13,13 +13,16 @@ import { mapStyle } from "../../global/mapStyle";
 
 import { carsAround } from "../../global/data";
 
-export const GooglePlacesInput = ({ placeholder, onPress }) => {
+export const GooglePlacesInput = ({ placeholder, onPlaceSelected }) => {
   return (
     <View style={styles.searchContainer}>
       <GooglePlacesAutocomplete
         placeholder={placeholder}
+        fetchDetails
         styles={{ textInput: styles.inputText }}
-        onPress={onPress}
+        onPress={(data, details = null) => {
+          onPlaceSelected(details);
+        }}
         query={{
           key: GOOGLE_PLACES_APIKEY,
           language: "en",
@@ -31,11 +34,29 @@ export const GooglePlacesInput = ({ placeholder, onPress }) => {
 };
 
 export default function MapComponent() {
+  const mapRef = useRef(null);
+
+  const moveTo = async (position) => {
+    const camera = await mapRef.current.getCamera();
+
+    if (camera) {
+      camera.center = position;
+      mapRef.current.animateCamera(camera, { duration: 1000 });
+    }
+  };
+
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
 
   const onPlaceSelected = (details, flag) => {
     const set = flag === "origin" ? setOrigin : setDestination;
+    const position = {
+      latitude: details?.geometry.location.lat,
+      longitude: details?.geometry.location.lng,
+    };
+
+    set(position);
+    moveTo(position);
   };
 
   const INITIAL_POSITION = {
@@ -47,6 +68,7 @@ export default function MapComponent() {
   return (
     <View style={styles.container}>
       <MapView
+        ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         region={INITIAL_POSITION}
@@ -76,16 +98,18 @@ export default function MapComponent() {
       </MapView>
       <GooglePlacesInput
         placeholder="Origin"
-        onPress={(data, details = null) => {
+        onPlaceSelected={(details = null) => {
+          onPlaceSelected(details, "origin");
           // 'details' is provided when fetchDetails = true
-          console.log(data, details);
+          console.log(details);
         }}
       />
       <View style={styles.compContainer}>
         <GooglePlacesInput
           placeholder="Destination"
-          onPress={(data, details = null) => {
+          onPlaceSelected={(data, details = null) => {
             // 'details' is provided when fetchDetails = true
+            onPlaceSelected(details, "destination");
             console.log(data, details);
           }}
         />
