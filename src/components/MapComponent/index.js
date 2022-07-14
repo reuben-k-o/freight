@@ -43,8 +43,8 @@ export default function MapComponent() {
     }
   };
 
-  const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
+  const [origin, setOrigin] = useState(null);
+  const [destination, setDestination] = useState(null);
 
   const onPlaceSelected = (details, flag) => {
     const set = flag === "origin" ? setOrigin : setDestination;
@@ -78,15 +78,10 @@ export default function MapComponent() {
         rotateEnabled={true}
         zoomEnabled={true}
       >
-        <Marker
-          coordinate={{ latitude: 0.29365, longitude: 35.2851 }}
-          title={"Eldoret"}
-        >
-          <Callout>
-            <Text>Eldoret</Text>
-          </Callout>
-        </Marker>
-        {carsAround.map((marker) => (
+        {origin && <Marker coordinate={origin} />}
+        {destination && <Marker coordinate={destination} />}
+
+        {/* {carsAround.map((marker) => (
           <Marker
             key={marker.latitude}
             coordinate={{
@@ -94,7 +89,7 @@ export default function MapComponent() {
               longitude: marker.longitude,
             }}
           ></Marker>
-        ))}
+        ))} */}
       </MapView>
       <View style={styles.searchContainer}>
         <GooglePlacesInput
