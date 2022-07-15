@@ -1,8 +1,8 @@
 export const filterData = [
-  { name: "Ride", image: require("../../assets/ride.png"), id: "0" },
-  { name: "Food", image: require("../../assets/food.png"), id: "1" },
+  { name: "Truck", image: require("../../assets/ride.png"), id: "0" },
+  { name: "Construction", image: require("../../assets/food.png"), id: "1" },
   { name: "Package", image: require("../../assets/package.png"), id: "2" },
-  { name: "Reserve", image: require("../../assets/reserve.png"), id: "3" },
+  // { name: "Relocate", image: require("../../assets/reserve.png"), id: "3" },
 ];
 
 export const rideData = [

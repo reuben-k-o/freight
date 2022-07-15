@@ -70,7 +70,7 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <ScrollView bounces={false}>
         <View style={styles.home}>
-          <Text style={styles.text1}>Select your destination</Text>
+          {/* <Text style={styles.text1}>Select your destination</Text> */}
           <View style={styles.view1}>
             <View style={styles.view8}>
               <Text style={styles.text22}>Welcome to Freight</Text>
@@ -96,7 +96,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
         <View>
           <FlatList
-            numRows={4}
+            numRows={3}
             horizontal
             showsHorizontalScrollIndicator={false}
             data={filterData}
@@ -118,7 +118,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.view4}>
             <Icon
               type="material-community"
-              name="clock-time-four"
+              name="clock-time-four" //animate
               color={colors.grey1}
               size={26}
             />
@@ -160,7 +160,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
 
-        <View style={{ ...styles.view5, borderBottomWidth: 0 }}>
+        {/* <View style={{ ...styles.view5, borderBottomWidth: 0 }}>
           <View style={styles.view6}>
             <View style={styles.view7}>
               <Icon
@@ -187,23 +187,23 @@ const HomeScreen = ({ navigation }) => {
               size={26}
             />
           </View>
-        </View>
+        </View> */}
 
-        <Text style={styles.text4}> Around you </Text>
+        <Text style={styles.text4}> Trucks Around you </Text>
         <View style={{ alignContent: "center", justifyContent: "center" }}>
           <MapView
             ref={_map}
             provider={PROVIDER_GOOGLE}
             style={styles.map}
-            customMapStyle={mapStyle}
+            // customMapStyle={mapStyle}
             showsUserLocation={true}
             followUserLocation={true}
             rotateEnabled={true}
             zoomEnabled={true}
             initialregion={{
               ...carsAround[0],
-              latitudeDelta: 0.008,
-              longitudeDelta: 0.0008,
+              latitudeDelta: 5.9,
+              longitudeDelta: 2.0,
             }}
           >
             {carsAround.map((item, index) => (
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   map: {
-    height: 150,
+    height: 200,
     marginHorizontal: 10,
     width: SCREEN_WIDTH * 0.95,
   },
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.black,
     marginLeft: 20,
-    marginBottom: 20,
+    marginVertical: 20,
   },
 
   icon1: {
