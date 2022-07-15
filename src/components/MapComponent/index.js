@@ -1,14 +1,9 @@
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
-import React, { Component, useRef, useState } from "react";
-import MapView, {
-  PROVIDER_GOOGLE,
-  Marker,
-  Polyline,
-  Callout,
-} from "react-native-maps";
+import React, { useRef, useState } from "react";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapViewDirections from "react-native-maps-directions";
-import { GOOGLE_MAPS_APIKEY, GOOGLE_PLACES_APIKEY } from "@env";
+import { GOOGLE_PLACES_APIKEY } from "@env";
 import Constants from "expo-constants";
 import { mapStyle } from "../../global/mapStyle";
 
@@ -56,6 +51,7 @@ export default function MapComponent() {
     right: edgePaddingValue,
     left: edgePaddingValue,
   };
+  
   const traceRoute = () => {
     if (origin && destination) {
       mapRef.current.fitToCoordinates([origin, destination], { edgePadding });

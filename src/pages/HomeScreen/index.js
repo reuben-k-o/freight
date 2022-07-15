@@ -73,15 +73,16 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.text1}>Select your destination</Text>
           <View style={styles.view1}>
             <View style={styles.view8}>
+              <Text style={styles.text22}>Welcome to Freight</Text>
               <Text style={styles.text2}>
-                Lorem Ipsum dolor met amet out window
+                Transport your lugguages hustle free
               </Text>
               <TouchableOpacity
                 activeOpacity={0.7}
                 onPress={() => navigation.navigate("RequestScreen")}
               >
                 <View style={styles.button1}>
-                  <Text style={styles.button1Text}>Ride with Uber</Text>
+                  <Text style={styles.button1Text}>Choose Destination</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -261,6 +262,10 @@ const styles = StyleSheet.create({
   text2: {
     color: colors.white,
     fontSize: 16,
+  },
+  text22: {
+    color: "gold",
+    fontSize: 18,
   },
 
   view1: {
