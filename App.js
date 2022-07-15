@@ -8,33 +8,11 @@ import { Icon } from "react-native-elements";
 import HomeScreen from "./src/Screens/HomeScreen";
 import RequestScreen from "./src/Screens/RequestScreen";
 import DestinationScreen from "./src/Screens/DestinationScreen";
+import ProfileScreen from "./src/Screens/ProfileScreen";
 import { colors } from "./src/global/styles";
 
 const Home = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-
-// export function DrawerNavigator() {
-//   return (
-//     <Drawer.Navigator>
-//       <Drawer.Screen
-//         name="HomeStack"
-//         component={HomeStack}
-//         options={{
-//           title: "Home",
-//           drawerIcon: ({ focussed, size }) => (
-//             <Icon
-//               type="material-community"
-//               name="home"
-//               color={focussed ? "#7cc" : colors.grey2}
-//               size={size}
-//             />
-//           ),
-//           headerShown: false,
-//         }}
-//       />
-//     </Drawer.Navigator>
-//   );
-// }
 
 export function DrawerNavigator() {
   return (
@@ -58,7 +36,7 @@ export function DrawerNavigator() {
             <Icon
               type="material-community"
               name="home"
-              color={focussed ? "#7cc" : colors.grey2}
+              color={focussed ? "#7cc" : colors.primary2}
               size={size}
             />
           ),
@@ -68,6 +46,11 @@ export function DrawerNavigator() {
       <Drawer.Screen
         name="RequestScreen"
         component={RequestScreen}
+        options={{ headerShown: false }}
+      />
+      <Drawer.Screen
+        name="Profile"
+        component={ProfileScreen}
         options={{ headerShown: false }}
       />
     </Drawer.Navigator>

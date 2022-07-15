@@ -119,14 +119,14 @@ const HomeScreen = ({ navigation }) => {
             <Icon
               type="material-community"
               name="clock-time-four" //animate
-              color={colors.grey1}
+              color={colors.primary1}
               size={26}
             />
             <Text style={{ marginLeft: 5, marginTop: 2 }}>Now</Text>
             <Icon
               type="material-community"
               name="chevron-down"
-              color={colors.grey1}
+              color={colors.primary1}
               size={26}
             />
           </View>
@@ -145,7 +145,7 @@ const HomeScreen = ({ navigation }) => {
               <Text style={{ fontSize: 18, color: colors.black }}>
                 32 Olivia Rd
               </Text>
-              <Text style={{ color: colors.grey3 }}>
+              <Text style={{ color: colors.primary3 }}>
                 Klipfontein 83-Ir, Bokburg
               </Text>
             </View>
@@ -154,13 +154,13 @@ const HomeScreen = ({ navigation }) => {
             <Icon
               type="material-community"
               name="chevron-right"
-              color={colors.grey}
+              color={colors.primary}
               size={26}
             />
           </View>
         </View>
 
-        <Text style={styles.text4}> Trucks Around you </Text>
+        <Text style={styles.text4}> Trucks nearby </Text>
         <View style={{ alignContent: "center", justifyContent: "center" }}>
           <MapView
             ref={_map}
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
   view2: {
     marginBottom: 5,
     borderRadius: 15,
-    backgroundColor: colors.grey6,
+    backgroundColor: colors.primary6,
   },
 
   title: {
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 5,
     height: 50,
-    backgroundColor: colors.grey6,
+    backgroundColor: colors.primary6,
     alignItems: "center",
     justifyContent: "space-between",
     marginHorizontal: 15,
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     paddingVertical: 25,
     justifyContent: "space-between",
     marginHorizontal: 15,
-    borderBottomColor: colors.grey4,
+    borderBottomColor: colors.primary4,
     borderBottomWidth: 1,
     flex: 1,
   },
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   view7: {
-    backgroundColor: colors.grey6,
+    backgroundColor: colors.primary6,
     height: 40,
     width: 40,
     borderRadius: 20,

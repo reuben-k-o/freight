@@ -11,15 +11,15 @@ import { getStatusBarHeight } from "react-native-status-bar-height";
 
 export const colors = {
   buttons: "#ff8c52",
-  grey: "#bebebe",
-  grey1: "#43484d",
-  grey2: "#5e6977",
-  grey3: "#86939e",
-  grey4: "#bdc6cf",
-  grey5: "#e1e8ee",
-  grey6: "#eeeeee",
-  grey7: "#F2f9f9",
-  grey10: "#d6d6d6",
+  primary: "#bebebe",
+  primary1: "#43484d",
+  primary2: "#5e6977",
+  primary3: "#86939e",
+  primary4: "#bdc6cf",
+  primary5: "#e1e8ee",
+  primary6: "#eeeeee",
+  primary7: "#F2f9f9",
+  primary10: "#d6d6d6",
   CardComment: "#86939e",
   cardbackground: "white",
   statusbar: "#ff8c52",
@@ -30,6 +30,7 @@ export const colors = {
   white: "#ffffff",
   darkBlue: "#2d328a",
   pagebackground: "white",
+  pri100: "#727272",
 };
 
 export const parameters = {

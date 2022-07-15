@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 
 const autoComplete = {
   textInput: {
-    backgroundColor: colors.grey6,
+    backgroundColor: colors.primary6,
     height: 50,
     borderRadius: 5,
     paddingVertical: 5,

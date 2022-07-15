@@ -15,7 +15,7 @@ const RequestScreen = ({ navigation }) => {
           <Icon
             type="material-community"
             name="arrow-left"
-            color={colors.grey1}
+            color={colors.primary1}
             size={32}
             onPress={() => navigation.goBack()}
           />
