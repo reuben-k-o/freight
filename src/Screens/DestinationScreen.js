@@ -9,38 +9,26 @@ import React, { useRef } from "react";
 import { colors, parameters } from "../global/styles";
 import { Avatar, Icon } from "react-native-elements";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { GOOGLE_MAPS_APIKEY } from "@env";
+import { GOOGLE_PLACES_APIKEY } from "@env";
 import Constants from "expo-constants";
 // import RNLocation from "react-native-location";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-// RNLocation.configure({
-//   distanceFilter: 100, // Meters
-//   desiredAccuracy: {
-//     ios: "best",
-//     android: "balancedPowerAccuracy",
-//   },
-//   // Android only
-//   androidProvider: "auto",
-//   interval: 5000, // Milliseconds
-//   fastestInterval: 10000, // Milliseconds
-//   maxWaitTime: 5000, // Milliseconds
-// });
-
 export const GooglePlacesInput = () => {
   return (
     <View style={styles.searchContainer}>
       <GooglePlacesAutocomplete
         placeholder="Destination"
+        fetchDetails
         styles={{ textInput: styles.inputText }}
         onPress={(data, details = null) => {
           // 'details' is provided when fetchDetails = true
           console.log(data, details);
         }}
         query={{
-          key: GOOGLE_MAPS_APIKEY,
+          key: GOOGLE_PLACES_APIKEY,
           language: "en",
         }}
         currentLocation={true}
@@ -53,55 +41,7 @@ const DestinationScreen = ({ navigation }) => {
   const textInput1 = useRef(4);
   const textInput2 = useRef(5);
 
-  return (
-    <>
-      <GooglePlacesInput />
-      {/* <View style={styles.view2}>
-        <View style={styles.view1}>
-          <Icon
-            type="material-community"
-            name="arrow-left"
-            color={colors.grey1}
-            size={32}
-            onPress={() => navigation.goBack()}
-          />
-        </View>
-        <TouchableOpacity>
-          <View style={{ top: 30, alignItems: "center" }}>
-            <View style={styles.view3}>
-              <Avatar
-                rounded
-                avatarStyle={{}}
-                size={30}
-                source={require("../../../assets/blankProfilePic.jpg")}
-              />
-              <Text style={{ marginLeft: 5 }}>For Someone</Text>
-              <Icon
-                type="material-community"
-                name="chevron-down"
-                color={colors.grey1}
-                size={26}
-              />
-            </View>
-          </View>
-        </TouchableOpacity>
-      </View> */}
-      {/* <GooglePlacesAutocomplete
-        nearbyPlacesAPI="GooglePlacesSearch"
-        placeholder="Going to..."
-        listViewDisplayed="auto"
-        debounce={400}
-        currentLocation={true}
-        ref={textInput1}
-        minLength={2}
-        enablePoweredByContainer={false}
-        fetchDetails={false}
-        autoFocus={true}
-        styles={autoComplete}
-        query={{ key: GOOGLE_MAPS_APIKEY, language: "en" }}
-      /> */}
-    </>
-  );
+  return <GooglePlacesInput />;
 };
 
 export default DestinationScreen;

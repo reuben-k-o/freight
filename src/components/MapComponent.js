@@ -109,16 +109,6 @@ export default function MapComponent() {
           strokeWidth={6}
           onReady={traceRouteOnReady}
         />
-
-        {/* {carsAround.map((marker) => (
-          <Marker
-            key={marker.latitude}
-            coordinate={{
-              latitude: marker.latitude,
-              longitude: marker.longitude,
-            }}
-          ></Marker>
-        ))} */}
       </MapView>
       <View style={styles.searchContainer}>
         <GooglePlacesInput

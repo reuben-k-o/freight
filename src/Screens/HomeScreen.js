@@ -89,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
             <View>
               <Image
                 style={styles.image1}
-                source={require("../../../assets/uberCar.png")}
+                source={require("../../assets/uberCar.png")}
               />
             </View>
           </View>
@@ -160,35 +160,6 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
 
-        {/* <View style={{ ...styles.view5, borderBottomWidth: 0 }}>
-          <View style={styles.view6}>
-            <View style={styles.view7}>
-              <Icon
-                type="material-community"
-                name="map-marker"
-                color={colors.black}
-                size={22}
-              />
-            </View>
-            <View>
-              <Text style={{ fontSize: 18, color: colors.black }}>
-                32 Olivia Rd
-              </Text>
-              <Text style={{ color: colors.grey3 }}>
-                Klipfontein 83-Ir, Bokburg
-              </Text>
-            </View>
-          </View>
-          <View>
-            <Icon
-              type="material-community"
-              name="chevron-right"
-              color={colors.grey}
-              size={26}
-            />
-          </View>
-        </View> */}
-
         <Text style={styles.text4}> Trucks Around you </Text>
         <View style={{ alignContent: "center", justifyContent: "center" }}>
           <MapView
@@ -211,7 +182,7 @@ const HomeScreen = ({ navigation }) => {
                 <Image
                   resizeMode="cover"
                   style={styles.carsAround}
-                  source={require("../../../assets/carMarker.png")}
+                  source={require("../../assets/carMarker.png")}
                 />
               </MapView.Marker>
             ))}
