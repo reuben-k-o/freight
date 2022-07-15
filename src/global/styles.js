@@ -31,6 +31,9 @@ export const colors = {
   darkBlue: "#2d328a",
   pagebackground: "white",
   pri100: "#727272",
+  daffodil: "#ffff31",
+  brown: "#815650",
+  aqua: "#00ffff",
 };
 
 export const parameters = {
