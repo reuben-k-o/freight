@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { Icon } from "react-native-elements";
+import { Ionicons, Fontisto } from "@expo/vector-icons";
 
 import HomeScreen from "./src/Screens/HomeScreen";
 import RequestScreen from "./src/Screens/RequestScreen";
@@ -19,12 +19,13 @@ export function DrawerNavigator() {
     <Drawer.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: "#351401" },
-        headerTintColor: "white",
-        sceneContainerStyle: { backgroundColor: colors.white },
-        drawerContentStyle: { backgroundColor: colors.blue },
-        drawerInactiveTintColor: "white",
-        drawerActiveTintColor: "#351401",
-        drawerActiveBackgroundColor: "#e4baa1",
+        // headerTintColor: "white",
+        sceneContainerStyle: { backgroundColor: colors.blue },
+        drawerContentStyle: { backgroundColor: colors.white },
+        drawerInactiveTintColor: colors.black,
+        drawerActiveTintColor: colors.white,
+        drawerActiveBackgroundColor: colors.blue,
+        drawerInactiveBackgroundColor: colors.primary,
       }}
     >
       <Drawer.Screen
@@ -33,12 +34,7 @@ export function DrawerNavigator() {
         options={{
           title: "Home",
           drawerIcon: ({ focussed, size }) => (
-            <Icon
-              type="material-community"
-              name="home"
-              color={focussed ? "#7cc" : colors.primary2}
-              size={size}
-            />
+            <Ionicons name="home" color={colors.black} size={size} />
           ),
           headerShown: false,
         }}
@@ -46,12 +42,28 @@ export function DrawerNavigator() {
       <Drawer.Screen
         name="RequestScreen"
         component={RequestScreen}
-        options={{ headerShown: false }}
+        options={{
+          title: "Request Truck",
+          drawerIcon: ({ focussed, size }) => (
+            <Fontisto name="truck" size={size} color={colors.black} />
+          ),
+          headerShown: false,
+        }}
       />
       <Drawer.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{ headerShown: false }}
+        options={{
+          title: "Profile",
+          drawerIcon: ({ size, focussed }) => (
+            <Ionicons
+              name="person"
+              size={size}
+              color={focussed ? colors.white : colors.black}
+            />
+          ),
+          headerShown: false,
+        }}
       />
     </Drawer.Navigator>
   );
