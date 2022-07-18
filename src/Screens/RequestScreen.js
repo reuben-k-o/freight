@@ -3,11 +3,13 @@ import React from "react";
 import { colors, parameters } from "../global/styles";
 import MapComponent from "../components/MapComponent";
 import { Avatar, Icon } from "react-native-elements";
+import Button from "../components/Button";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const RequestScreen = ({ navigation }) => {
+  function requestTruckHandler() {}
   return (
     <>
       <View style={styles.container}>
@@ -22,6 +24,11 @@ const RequestScreen = ({ navigation }) => {
         </View>
 
         <MapComponent />
+        <View style={styles.bottomButton}>
+          <Button onPress={requestTruckHandler} style={styles.requestButton}>
+            Request a Truck
+          </Button>
+        </View>
       </View>
     </>
   );
@@ -47,5 +54,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 2,
     zIndex: 8,
+  },
+  requestButton: {
+    width: "30%",
+  },
+  bottomButton: {
+    // position: "absolute",
+    // justifyContent: "flex-end",
+    marginTop: 100,
   },
 });

@@ -1,6 +1,10 @@
 export const filterData = [
   { name: "Truck", image: require("../../assets/lorrytruck.jpg"), id: "0" },
-  { name: "Construction", image: require("../../assets/food.png"), id: "1" },
+  {
+    name: "Construction",
+    image: require("../../assets/lorrytruck.jpg"),
+    id: "1",
+  },
   { name: "Package", image: require("../../assets/package.png"), id: "2" },
   // { name: "Relocate", image: require("../../assets/reserve.png"), id: "3" },
 ];
