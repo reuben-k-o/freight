@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   TextInput,
   StyleSheet,
@@ -13,6 +13,44 @@ import apiKey from "../google_api_key";
 import { io } from "socket.io-client";
 import BottomButton from "../components/BottomButton";
 import { baseURL, socketIoURL } from "../baseUrl";
+
+function RequestTruck({ routeResponse }) {
+  const [inputs, setInputs] = useState({
+    lookingForDriver: false,
+    buttonText: "REQUEST 🚗",
+    driverIsOnTheWar: false,
+    predictions: [],
+  });
+
+  const requestDriver = () => {
+    //  this.setState({ lookingForDriver: true });
+
+    setInputs({ lookingForDriver: true });
+    const socket = io(socketIoURL);
+
+    socket.on("connect", () => {
+      //Request a Taxi!
+      socket.emit("taxiRequest", routeResponse);
+    });
+
+    socket.on("driverLocation", (driverLocation) => {
+      const pointCoords = [...this.props.pointCoords, driverLocation];
+      console.log("socketon driverlocation", pointCoords);
+      console.log("driverLoc", driverLocation);
+      this.map.fitToCoordinates(pointCoords, {
+        edgePadding: { top: 40, bottom: 20, left: 20, right: 20 },
+      });
+      //this.getRouteDirections(routeResponse.geocoded_waypoints[0].place_id);
+      setInputs({
+        buttonText: "TAXI IS ON THE WAY!",
+        lookingForDriver: false,
+        driverIsOnTheWay: true,
+        driverLocation,
+      });
+    });
+  };
+}
+
 export default class Passenger extends Component {
   constructor(props) {
     super(props);
