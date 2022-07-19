@@ -13,8 +13,9 @@ import apiKey from "../google_api_key";
 import { io } from "socket.io-client";
 import BottomButton from "../components/BottomButton";
 import { baseURL, socketIoURL } from "../baseUrl";
+import Button from "./Button";
 
-function RequestTruck({ routeResponse }) {
+function RequestTruck({ routeResponse, pointCoords }) {
   const [inputs, setInputs] = useState({
     lookingForDriver: false,
     buttonText: "REQUEST 🚗",
@@ -29,93 +30,63 @@ function RequestTruck({ routeResponse }) {
     const socket = io(socketIoURL);
 
     socket.on("connect", () => {
-      //Request a Taxi!
-      socket.emit("taxiRequest", routeResponse);
+      //Request a Truck!
+      socket.emit("truckRequest", routeResponse);
     });
 
     socket.on("driverLocation", (driverLocation) => {
-      const pointCoords = [...this.props.pointCoords, driverLocation];
-      console.log("socketon driverlocation", pointCoords);
-      console.log("driverLoc", driverLocation);
+      const pointCoords = [...pointCoords, driverLocation];
+      console.log("socket on driverlocation", pointCoords);
+      console.log("driver Loc", driverLocation);
       this.map.fitToCoordinates(pointCoords, {
         edgePadding: { top: 40, bottom: 20, left: 20, right: 20 },
       });
       //this.getRouteDirections(routeResponse.geocoded_waypoints[0].place_id);
       setInputs({
-        buttonText: "TAXI IS ON THE WAY!",
+        buttonText: "TRUCK IS ON THE WAY!",
         lookingForDriver: false,
         driverIsOnTheWay: true,
         driverLocation,
       });
     });
   };
+
+  return (
+    <>
+      {driverIsOnTheWay && (
+        <Marker coordinate={driverLocation}>
+          <Image
+            source={require("../images/lorrytruck.jpg")}
+            style={{ width: 40, height: 40 }}
+          />
+        </Marker>
+      )}
+      {lookingForDriver && (
+        <ActivityIndicator
+          size="large"
+          animating={lookingForDriver}
+          color="white"
+        />
+      )}
+      {pointCoords.length > 1 &&
+        (<Marker coordinate={pointCoords[pointCoords.length - 1]} />)(
+          <Button onPress={() => requestDriver()}>
+            {findingDriverActIndicator}
+          </Button>
+        )}
+    </>
+  );
 }
 
 export default class Passenger extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      lookingForDriver: false,
-      buttonText: "REQUEST 🚗",
-      driverIsOnTheWar: false,
-      predictions: [],
-    };
-  }
-
-  async onChangeDestination(destination) {
-    //call places API
-    const apiUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${destination}&key=${apiKey}&location=${this.props.latitude}, ${this.props.longitude}&radius=2000`;
-    try {
-      const result = await fetch(apiUrl);
-      const json = await result.json();
-      this.setState({
-        predictions: json.predictions,
-      });
-    } catch (err) {
-      console.log("L", err);
-    }
-  }
-
-  async resquestDriver() {
-    this.setState({ lookingForDriver: true });
-
-    const socket = io(socketIoURL);
-
-    socket.on("connect", () => {
-      //Request a Taxi!
-      socket.emit("taxiRequest", this.props.routeResponse);
-    });
-
-    socket.on("driverLocation", (driverLocation) => {
-      const pointCoords = [...this.props.pointCoords, driverLocation];
-      console.log("socketon driverlocation", pointCoords);
-      console.log("driverLoc", driverLocation);
-      this.map.fitToCoordinates(pointCoords, {
-        edgePadding: { top: 40, bottom: 20, left: 20, right: 20 },
-      });
-      //this.getRouteDirections(routeResponse.geocoded_waypoints[0].place_id);
-      this.setState({
-        buttonText: "TAXI IS ON THE WAY!",
-        lookingForDriver: false,
-        driverIsOnTheWar: true,
-        driverLocation,
-      });
-    });
-  }
-
   render() {
-    let marker = null;
-    let getDriver = null;
-    let findingDriverActIndicator = null;
-    let driverMarker = null;
-
     if (this.props.latitude === null) {
       return null;
     }
 
     if (this.state.driverIsOnTheWar) {
       driverMarker = (
-        <Marker coordinate={this.state.driverLocation}>
+        <Marker coordinate={driverLocation}>
           <Image
             source={require("../images/carIcon.png")}
             style={{ width: 40, height: 40 }}
