@@ -1,11 +1,11 @@
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useRef, useState } from "react";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_PLACES_APIKEY } from "@env";
 import Constants from "expo-constants";
 
 import { PlacesAutocomplete } from "./PlacesAutocomplete";
+import MapView from "./MapView";
 
 export default function MapComponent() {
   const [origin, setOrigin] = useState(null);
@@ -56,37 +56,20 @@ export default function MapComponent() {
     moveTo(position);
   };
 
-  const INITIAL_POSITION = {
-    latitude: 0.5143,
-    longitude: 35.2698,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
   return (
-    <View style={styles.container}>
-      <MapView
-        ref={mapRef}
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
-        initialRegion={INITIAL_POSITION}
-        showsUserLocation={true}
-        followUserLocation={true}
-        rotateEnabled={true}
-        zoomEnabled={true}
-      >
-        {origin && <Marker coordinate={origin} />}
-        {destination && <Marker coordinate={destination} />}
-        {origin && destination && traceRoute()}
+    <MapView ref={mapRef}>
+      {origin && <Marker coordinate={origin} />}
+      {destination && <Marker coordinate={destination} />}
+      {origin && destination && traceRoute()}
 
-        <MapViewDirections
-          origin={origin}
-          destination={destination}
-          apikey={GOOGLE_PLACES_APIKEY}
-          strokeColor="#6644ff"
-          strokeWidth={6}
-          onReady={traceRouteOnReady}
-        />
-      </MapView>
+      <MapViewDirections
+        origin={origin}
+        destination={destination}
+        apikey={GOOGLE_PLACES_APIKEY}
+        strokeColor="#6644ff"
+        strokeWidth={6}
+        onReady={traceRouteOnReady}
+      />
       <View style={styles.searchContainer}>
         <PlacesAutocomplete
           placeholder="Origin"
@@ -109,20 +92,11 @@ export default function MapComponent() {
           </View>
         ) : null}
       </View>
-    </View>
+    </MapView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignContent: "center",
-    alignItems: "center",
-  },
-  map: {
-    height: "100%",
-    width: "100%",
-  },
-
   compContainer: {
     marginVertical: 10,
   },
