@@ -2,6 +2,7 @@ node_modules/
 .expo/
 dist/
 .env
+baseUrl.js
 
 npm-debug.*
 *.jks
