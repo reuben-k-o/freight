@@ -8,7 +8,6 @@ import Constants from "expo-constants";
 import { mapStyle } from "../global/mapStyle";
 
 import { carsAround } from "../global/data";
-import Button from "./Button";
 
 export const GooglePlacesInput = ({ placeholder, onPlaceSelected }) => {
   return (
@@ -132,7 +131,6 @@ export default function MapComponent() {
           </View>
         ) : null}
       </View>
-      {/* <Button style={styles.requestButton}>Request a Truck</Button> */}
     </View>
   );
 }
@@ -146,11 +144,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  requestButton: {
-    position: "absolute",
-    width: "30%",
-    justifyContent: "flex-start",
-  },
+
   compContainer: {
     marginVertical: 10,
   },

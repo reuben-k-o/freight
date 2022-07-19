@@ -56,11 +56,14 @@ const styles = StyleSheet.create({
     zIndex: 8,
   },
   requestButton: {
-    width: "30%",
+    padding: 30,
+    fontSize: 24,
   },
   bottomButton: {
-    // position: "absolute",
-    // justifyContent: "flex-end",
-    marginTop: 100,
+    width: "100%",
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 700,
   },
 });
