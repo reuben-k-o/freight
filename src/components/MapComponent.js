@@ -7,8 +7,14 @@ import Constants from "expo-constants";
 
 import { PlacesAutocomplete } from "./PlacesAutocomplete";
 import MapView from "./MapView";
+import MapDirections from "./MapDirections";
 
-export default function MapComponent({ reference }) {
+export default function MapComponent({
+  reference,
+  placeOrigin,
+  placeDest,
+  trackRouteOnReady,
+}) {
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
   const [distance, setDistance] = useState(0);
@@ -63,14 +69,10 @@ export default function MapComponent({ reference }) {
         {origin && <Marker coordinate={origin} />}
         {destination && <Marker coordinate={destination} />}
         {origin && destination && traceRoute()}
-
-        <MapViewDirections
-          origin={origin}
-          destination={destination}
-          apikey={GOOGLE_PLACES_APIKEY}
-          strokeColor="#6644ff"
-          strokeWidth={6}
-          onReady={traceRouteOnReady}
+        <MapDirections
+          placeOrigin={origin}
+          placeDest={destination}
+          trackRouteOnReady={traceRouteOnReady}
         />
       </MapView>
       <View style={styles.searchContainer}>
