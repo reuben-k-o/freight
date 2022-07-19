@@ -1,17 +1,14 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import {
   TextInput,
   StyleSheet,
   View,
   Text,
-  TouchableHighlight,
   ActivityIndicator,
   Image,
 } from "react-native";
-import MapView, { Polyline, Marker } from "react-native-maps";
-import apiKey from "../google_api_key";
+import MapView, { Marker } from "react-native-maps";
 import { io } from "socket.io-client";
-import BottomButton from "../components/BottomButton";
 import { baseURL, socketIoURL } from "../baseUrl";
 import Button from "./Button";
 
@@ -24,8 +21,6 @@ function RequestTruck({ routeResponse, pointCoords }) {
   });
 
   const requestDriver = () => {
-    //  this.setState({ lookingForDriver: true });
-
     setInputs({ lookingForDriver: true });
     const socket = io(socketIoURL);
 
@@ -87,7 +82,7 @@ function RequestTruck({ routeResponse, pointCoords }) {
             color="white"
           />
         )}
-        Search for Driver
+        {inputs.buttonText}
       </Button>
     );
   }
@@ -126,6 +121,8 @@ function RequestTruck({ routeResponse, pointCoords }) {
     </View>
   );
 }
+
+export default RequestTruck;
 
 const styles = StyleSheet.create({
   bottomButton: {

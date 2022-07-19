@@ -1,31 +1,11 @@
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useRef, useState } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_PLACES_APIKEY } from "@env";
 import Constants from "expo-constants";
-import { mapStyle } from "../global/mapStyle";
 
-import { carsAround } from "../global/data";
-
-export const GooglePlacesInput = ({ placeholder, onPlaceSelected }) => {
-  return (
-    <GooglePlacesAutocomplete
-      placeholder={placeholder}
-      fetchDetails
-      styles={{ textInput: styles.inputText }}
-      onPress={(data, details = null) => {
-        onPlaceSelected(details);
-      }}
-      query={{
-        key: GOOGLE_PLACES_APIKEY,
-        language: "en",
-      }}
-      currentLocation={true}
-    />
-  );
-};
+import { PlacesAutocomplete } from "./PlacesAutocomplete";
 
 export default function MapComponent() {
   const [origin, setOrigin] = useState(null);
@@ -89,7 +69,6 @@ export default function MapComponent() {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={INITIAL_POSITION}
-        // customMapStyle={mapStyle}
         showsUserLocation={true}
         followUserLocation={true}
         rotateEnabled={true}
@@ -109,15 +88,14 @@ export default function MapComponent() {
         />
       </MapView>
       <View style={styles.searchContainer}>
-        <GooglePlacesInput
+        <PlacesAutocomplete
           placeholder="Origin"
           onPlaceSelected={(details = null) => {
-            // 'details' is provided when fetchDetails = true
             onPlaceSelected(details, "origin");
           }}
         />
         <View style={styles.compContainer}>
-          <GooglePlacesInput
+          <PlacesAutocomplete
             placeholder="Destination"
             onPlaceSelected={(details = null) => {
               onPlaceSelected(details, "destination");
