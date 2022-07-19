@@ -51,137 +51,80 @@ function RequestTruck({ routeResponse, pointCoords }) {
     });
   };
 
-  return (
-    <>
-      {driverIsOnTheWay && (
-        <Marker coordinate={driverLocation}>
-          <Image
-            source={require("../images/lorrytruck.jpg")}
-            style={{ width: 40, height: 40 }}
-          />
-        </Marker>
-      )}
-      {lookingForDriver && (
-        <ActivityIndicator
-          size="large"
-          animating={lookingForDriver}
-          color="white"
+  let marker = null;
+  let getDriver = null;
+  let findingDriverActIndicator = null;
+  let driverMarker = null;
+
+  if (driverIsOnTheWay) {
+    driverMarker = (
+      <Marker coordinate={driverLocation}>
+        <Image
+          source={require("../images/lorrytruck.jpg")}
+          style={{ width: 40, height: 40 }}
         />
-      )}
-      {pointCoords.length > 1 &&
-        (<Marker coordinate={pointCoords[pointCoords.length - 1]} />)(
-          <Button onPress={() => requestDriver()}>
-            {findingDriverActIndicator}
-          </Button>
-        )}
-    </>
-  );
-}
-
-export default class Passenger extends Component {
-  render() {
-    if (this.props.latitude === null) {
-      return null;
-    }
-
-    if (this.state.driverIsOnTheWar) {
-      driverMarker = (
-        <Marker coordinate={driverLocation}>
-          <Image
-            source={require("../images/carIcon.png")}
-            style={{ width: 40, height: 40 }}
-          />
-        </Marker>
-      );
-    }
-
-    if (this.state.lookingForDriver) {
-      findingDriverActIndicator = (
-        <ActivityIndicator
-          size="large"
-          animating={this.state.lookingForDriver}
-          color="white"
-        />
-      );
-    }
-
-    if (this.props.pointCoords.length > 1) {
-      marker = (
-        <Marker
-          coordinate={this.props.pointCoords[this.props.pointCoords.length - 1]}
-        />
-      );
-      getDriver = (
-        <BottomButton
-          onPressFunction={() => this.resquestDriver()}
-          buttonText={this.state.buttonText}
-        >
-          {findingDriverActIndicator}
-        </BottomButton>
-      );
-    }
-    const predictions = this.state.predictions.map((prediction) => (
-      <TouchableHighlight
-        onPress={async () => {
-          const destinationName = await this.props.getRouteDirections(
-            prediction.place_id,
-            prediction.structured_formatting.main_text
-          );
-          this.setState({ predictions: [], destination: destinationName });
-          this.map.fitToCoordinates(this.props.pointCoords, {
-            edgePadding: { top: 20, bottom: 20, left: 80, right: 80 },
-          });
-        }}
-        key={prediction.place_id}
-      >
-        <View>
-          <Text style={styles.suggestions}>
-            {prediction.structured_formatting.main_text}
-          </Text>
-        </View>
-      </TouchableHighlight>
-    ));
-
-    return (
-      <View style={styles.mapStyle}>
-        <MapView
-          ref={(map) => {
-            this.map = map;
-          }}
-          style={styles.mapStyle}
-          initialRegion={{
-            latitude: this.props.latitude,
-            longitude: this.props.longitude,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}
-          showsUserLocation={true}
-        >
-          <Polyline
-            coordinates={this.props.pointCoords}
-            strokeWidth={2}
-            strokeColor="red"
-          />
-          {marker}
-          {driverMarker}
-        </MapView>
-
-        <TextInput
-          placeholder="Enter destination..."
-          style={styles.destinationInput}
-          value={this.state.destination}
-          clearButtonMode="always"
-          onChangeText={(destination) => {
-            this.props.destination = destination;
-            //this.setState({destination});
-            this.onChangeDestination(destination);
-          }}
-        />
-        {predictions}
-        {getDriver}
-      </View>
+      </Marker>
     );
   }
+
+  if (lookingForDriver) {
+    findingDriverActIndicator = (
+      <ActivityIndicator
+        size="large"
+        animating={lookingForDriver}
+        color="white"
+      />
+    );
+  }
+
+  if (pointCoords.length > 1) {
+    marker = (<Marker coordinate={pointCoords[pointCoords.length - 1]} />)(
+      <Button onPress={() => requestDriver()}>
+        {lookingForDriver && (
+          <ActivityIndicator
+            size="large"
+            animating={lookingForDriver}
+            color="white"
+          />
+        )}
+        Search for Driver
+      </Button>
+    );
+  }
+  return (
+    <View style={styles.mapStyle}>
+      <MapView
+        ref={(map) => {
+          this.map = map;
+        }}
+        style={styles.mapStyle}
+        initialRegion={{
+          latitude: this.props.latitude,
+          longitude: this.props.longitude,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+        }}
+        showsUserLocation={true}
+      >
+        {marker}
+        {driverMarker}
+      </MapView>
+
+      <TextInput
+        placeholder="Enter destination..."
+        style={styles.destinationInput}
+        value={this.state.destination}
+        clearButtonMode="always"
+        onChangeText={(destination) => {
+          this.props.destination = destination;
+          //this.setState({destination});
+          this.onChangeDestination(destination);
+        }}
+      />
+      {predictions}
+      {getDriver}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
