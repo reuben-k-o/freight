@@ -1,7 +1,8 @@
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_PLACES_APIKEY } from "@env";
+import { StyleSheet } from "react-native";
 
-export const GooglePlacesInput = ({ placeholder, onPlaceSelected }) => {
+export const PlacesAutocomplete = ({ placeholder, onPlaceSelected }) => {
   return (
     <GooglePlacesAutocomplete
       placeholder={placeholder}
@@ -18,3 +19,11 @@ export const GooglePlacesInput = ({ placeholder, onPlaceSelected }) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  inputText: {
+    // borderWidth: 1,
+    borderRadius: 6,
+    elevation: 16,
+  },
+});

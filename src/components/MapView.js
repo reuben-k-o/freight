@@ -1,7 +1,7 @@
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { StyleSheet, View } from "react-native";
 
-function MapView({ children, ref }) {
+function MapViewComponent({ children, reference }) {
   const INITIAL_POSITION = {
     latitude: 0.5143,
     longitude: 35.2698,
@@ -11,7 +11,7 @@ function MapView({ children, ref }) {
   return (
     <View style={styles.container}>
       <MapView
-        ref={ref}
+        ref={reference}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={INITIAL_POSITION}
@@ -26,7 +26,7 @@ function MapView({ children, ref }) {
   );
 }
 
-export default MapView;
+export default MapViewComponent;
 
 const styles = StyleSheet.create({
   container: {

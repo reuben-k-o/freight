@@ -2,12 +2,13 @@ import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useRef, useState } from "react";
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_PLACES_APIKEY } from "@env";
+import { Marker } from "react-native-maps";
 import Constants from "expo-constants";
 
 import { PlacesAutocomplete } from "./PlacesAutocomplete";
 import MapView from "./MapView";
 
-export default function MapComponent() {
+export default function MapComponent({ reference }) {
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
   const [distance, setDistance] = useState(0);
@@ -57,19 +58,21 @@ export default function MapComponent() {
   };
 
   return (
-    <MapView ref={mapRef}>
-      {origin && <Marker coordinate={origin} />}
-      {destination && <Marker coordinate={destination} />}
-      {origin && destination && traceRoute()}
+    <>
+      <MapView reference={mapRef}>
+        {origin && <Marker coordinate={origin} />}
+        {destination && <Marker coordinate={destination} />}
+        {origin && destination && traceRoute()}
 
-      <MapViewDirections
-        origin={origin}
-        destination={destination}
-        apikey={GOOGLE_PLACES_APIKEY}
-        strokeColor="#6644ff"
-        strokeWidth={6}
-        onReady={traceRouteOnReady}
-      />
+        <MapViewDirections
+          origin={origin}
+          destination={destination}
+          apikey={GOOGLE_PLACES_APIKEY}
+          strokeColor="#6644ff"
+          strokeWidth={6}
+          onReady={traceRouteOnReady}
+        />
+      </MapView>
       <View style={styles.searchContainer}>
         <PlacesAutocomplete
           placeholder="Origin"
@@ -92,7 +95,7 @@ export default function MapComponent() {
           </View>
         ) : null}
       </View>
-    </MapView>
+    </>
   );
 }
 
@@ -116,10 +119,5 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     top: Constants.statusBarHeight,
-  },
-  inputText: {
-    // borderWidth: 1,
-    borderRadius: 6,
-    elevation: 16,
   },
 });
