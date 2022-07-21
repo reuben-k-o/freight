@@ -19,10 +19,11 @@ import * as Location from "expo-location";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-export const currentLocation = latlng;
+let position
 
 const HomeScreen = ({ navigation }) => {
   const [latlng, setLatlng] = useState({});
+  position = latlng
 
   const checkPermissions = async () => {
     const hasPermission = await Location.requestForegroundPermissionsAsync();
@@ -197,6 +198,8 @@ const HomeScreen = ({ navigation }) => {
 };
 
 export default HomeScreen;
+export const currentLocation = position;
+
 
 const styles = StyleSheet.create({
   container: {

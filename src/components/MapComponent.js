@@ -9,12 +9,19 @@ import { PlacesAutocomplete } from "./PlacesAutocomplete";
 import MapView from "./MapView";
 import MapDirections from "./MapDirections";
 import { currentLocation } from "../Screens/HomeScreen";
+import Button from "./Button";
 
 export default function MapComponent() {
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [inputs, setInputs] = useState({
+    lookingForDriver: false,
+    buttonText: "REQUEST 🚗",
+    driverIsOnTheWay: false,
+    predictions: [],
+  });
   const mapRef = useRef(null);
 
   let travelTo;
@@ -60,13 +67,52 @@ export default function MapComponent() {
     set(position);
     moveTo(position);
   };
-  
+
+  const requestDriver = () => {
+    setInputs({ lookingForDriver: true });
+    const socket = io(socketIoURL);
+
+    socket.on("connect", () => {
+      const routeResponse = [origin, destination];
+      //Request a Truck!
+      socket.emit("truckRequest", routeResponse);
+    });
+
+    socket.on("driverLocation", (driverLocation) => {
+      travelTo = destination;
+      console.log(`Client's destination ${destination}`);
+      setOrigin(driverLocation);
+      setDestination(currentLocation);
+      console.log(`Current location ${currentLocation}`);
+
+      setInputs({
+        buttonText: "TRUCK IS ON THE WAY!",
+        lookingForDriver: false,
+        driverIsOnTheWay: true,
+        driverLocation,
+      });
+    });
+  };
+
+  if (lookingForDriver) {
+    findingDriverActIndicator = (
+      <ActivityIndicator
+        size="large"
+        animating={lookingForDriver}
+        color="white"
+      />
+    );
+  }
 
   const driverToClient = (driverLoc) => {
     travelTo = destination;
+    console.log(`Client's destination ${destination}`);
     setOrigin(driverLoc);
     setDestination(currentLocation);
+    console.log(`Current location ${currentLocation}`);
   };
+
+  driverToClient({ latitude: 0.53368, longitude: 35.28515 });
 
   return (
     <>
@@ -102,6 +148,16 @@ export default function MapComponent() {
           </View>
         ) : null}
       </View>
+      <Button onPress={requestDriver}>
+        {lookingForDriver && (
+          <ActivityIndicator
+            size="large"
+            animating={lookingForDriver}
+            color="white"
+          />
+        )}
+        {inputs.buttonText}
+      </Button>
     </>
   );
 }

@@ -122,15 +122,6 @@ export const paymentOptions = [
   { image: require("../../assets/cashIcon.png"), text: "Cash" },
 ];
 
-export const availableServices = [
-  "Uber Go",
-  "UberX",
-  "Uber connect",
-  "Uber Black",
-  "Uber Van",
-  "Uber Assist",
-];
-
 export const carsAround = [
   { latitude: 0.32365, longitude: 34.2851 },
   { latitude: 0.0737, longitude: 35.18519 },
