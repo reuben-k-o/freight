@@ -12,11 +12,11 @@ import { io } from "socket.io-client";
 import { baseURL, socketIoURL } from "../baseUrl";
 import Button from "./Button";
 
-function RequestTruck({ routeResponse, pointCoords }) {
+function RequestTruck() {
   const [inputs, setInputs] = useState({
     lookingForDriver: false,
     buttonText: "REQUEST 🚗",
-    driverIsOnTheWar: false,
+    driverIsOnTheWay: false,
     predictions: [],
   });
 

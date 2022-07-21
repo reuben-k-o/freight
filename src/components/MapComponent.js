@@ -9,12 +9,7 @@ import { PlacesAutocomplete } from "./PlacesAutocomplete";
 import MapView from "./MapView";
 import MapDirections from "./MapDirections";
 
-export default function MapComponent({
-  reference,
-  placeOrigin,
-  placeDest,
-  trackRouteOnReady,
-}) {
+export default function MapComponent() {
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
   const [distance, setDistance] = useState(0);
@@ -110,12 +105,16 @@ const styles = StyleSheet.create({
   searchContainer: {
     position: "absolute",
     width: "90%",
+    marginTop: 40,
+    marginLeft: 20,
+    // alignItems: "center",
+    // justifyContent: "center",
     top: Constants.statusBarHeight,
   },
   searchContainerBelow: {
     position: "absolute",
     width: "90%",
-    marginTop: 20,
+    marginTop: 40,
     backgroundColor: "white",
     elevation: 6,
     padding: 8,

@@ -22,7 +22,6 @@ export const PlacesAutocomplete = ({ placeholder, onPlaceSelected }) => {
 
 const styles = StyleSheet.create({
   inputText: {
-    // borderWidth: 1,
     borderRadius: 6,
     elevation: 16,
   },
