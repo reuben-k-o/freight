@@ -24,11 +24,11 @@ const RequestScreen = ({ navigation }) => {
         </View>
 
         <MapComponent />
-        <View style={styles.bottomButton}>
+        {/* <View style={styles.bottomButton}>
           <Button onPress={requestTruckHandler} style={styles.requestButton}>
             Request a Truck
           </Button>
-        </View>
+        </View> */}
       </View>
     </>
   );

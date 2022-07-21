@@ -1,15 +1,18 @@
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, View, ActivityIndicator } from "react-native";
 import React, { useRef, useState } from "react";
-import MapViewDirections from "react-native-maps-directions";
-import { GOOGLE_PLACES_APIKEY } from "@env";
 import { Marker } from "react-native-maps";
 import Constants from "expo-constants";
+import { io } from "socket.io-client";
+import Geocoder from "react-native-geocoding";
 
 import { PlacesAutocomplete } from "./PlacesAutocomplete";
 import MapView from "./MapView";
 import MapDirections from "./MapDirections";
 import { currentLocation } from "../Screens/HomeScreen";
+import { socketIoURL } from "../../baseUrl";
 import Button from "./Button";
+import LoadingOverlay from "./ui/LoadingOverlay";
+import { GOOGLE_PLACES_APIKEY } from "@env";
 
 export default function MapComponent() {
   const [origin, setOrigin] = useState(null);
@@ -20,11 +23,9 @@ export default function MapComponent() {
     lookingForDriver: false,
     buttonText: "REQUEST 🚗",
     driverIsOnTheWay: false,
-    predictions: [],
   });
   const mapRef = useRef(null);
-
-  let travelTo;
+  Geocoder.init(GOOGLE_PLACES_APIKEY);
 
   const moveTo = async (position) => {
     const camera = await mapRef.current.getCamera();
@@ -69,50 +70,39 @@ export default function MapComponent() {
   };
 
   const requestDriver = () => {
-    setInputs({ lookingForDriver: true });
+    setInputs((curInputs) => {
+      return { ...curInputs, lookingForDriver: true };
+    });
     const socket = io(socketIoURL);
 
     socket.on("connect", () => {
       const routeResponse = [origin, destination];
       //Request a Truck!
       socket.emit("truckRequest", routeResponse);
+      console.log(`Client's route response ${routeResponse[0].latitude}`);
+      Geocoder.from(origin).then((json) => {
+        const address = json.results[0].address_components;
+        console.log(address);
+      });
     });
 
     socket.on("driverLocation", (driverLocation) => {
-      travelTo = destination;
       console.log(`Client's destination ${destination}`);
       setOrigin(driverLocation);
       setDestination(currentLocation);
       console.log(`Current location ${currentLocation}`);
+      console.log(`Driver location ${driverLocation}`);
 
-      setInputs({
-        buttonText: "TRUCK IS ON THE WAY!",
-        lookingForDriver: false,
-        driverIsOnTheWay: true,
-        driverLocation,
+      setInputs((curInputs) => {
+        return {
+          ...curInputs,
+          buttonText: "TRUCK IS ON THE WAY!",
+          lookingForDriver: false,
+          driverIsOnTheWay: true,
+        };
       });
     });
   };
-
-  if (lookingForDriver) {
-    findingDriverActIndicator = (
-      <ActivityIndicator
-        size="large"
-        animating={lookingForDriver}
-        color="white"
-      />
-    );
-  }
-
-  const driverToClient = (driverLoc) => {
-    travelTo = destination;
-    console.log(`Client's destination ${destination}`);
-    setOrigin(driverLoc);
-    setDestination(currentLocation);
-    console.log(`Current location ${currentLocation}`);
-  };
-
-  driverToClient({ latitude: 0.53368, longitude: 35.28515 });
 
   return (
     <>
@@ -147,17 +137,13 @@ export default function MapComponent() {
             <Text>Duration : {Math.ceil(duration)} min</Text>
           </View>
         ) : null}
+        {inputs.lookingForDriver && <LoadingOverlay />}
       </View>
-      <Button onPress={requestDriver}>
-        {lookingForDriver && (
-          <ActivityIndicator
-            size="large"
-            animating={lookingForDriver}
-            color="white"
-          />
-        )}
-        {inputs.buttonText}
-      </Button>
+      <View style={styles.bottomButton}>
+        <Button onPress={requestDriver} style={styles.requestButton}>
+          {inputs.buttonText}
+        </Button>
+      </View>
     </>
   );
 }
@@ -167,14 +153,22 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button: {},
-  buttonText: {},
+  bottomButton: {
+    width: "100%",
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 650,
+  },
+  requestButton: {
+    padding: 60,
+    fontSize: 24,
+  },
   searchContainer: {
     position: "absolute",
     width: "90%",
     marginTop: 40,
     marginLeft: 20,
-    // alignItems: "center",
-    // justifyContent: "center",
     top: Constants.statusBarHeight,
   },
   searchContainerBelow: {
