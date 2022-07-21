@@ -19,6 +19,8 @@ import * as Location from "expo-location";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
+export const currentLocation = latlng;
+
 const HomeScreen = ({ navigation }) => {
   const [latlng, setLatlng] = useState({});
 

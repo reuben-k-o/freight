@@ -8,6 +8,7 @@ import Constants from "expo-constants";
 import { PlacesAutocomplete } from "./PlacesAutocomplete";
 import MapView from "./MapView";
 import MapDirections from "./MapDirections";
+import { currentLocation } from "../Screens/HomeScreen";
 
 export default function MapComponent() {
   const [origin, setOrigin] = useState(null);
@@ -15,6 +16,8 @@ export default function MapComponent() {
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
   const mapRef = useRef(null);
+
+  let travelTo;
 
   const moveTo = async (position) => {
     const camera = await mapRef.current.getCamera();
@@ -56,6 +59,13 @@ export default function MapComponent() {
 
     set(position);
     moveTo(position);
+  };
+  
+
+  const driverToClient = (driverLoc) => {
+    travelTo = destination;
+    setOrigin(driverLoc);
+    setDestination(currentLocation);
   };
 
   return (

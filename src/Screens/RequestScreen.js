@@ -2,7 +2,7 @@ import { StyleSheet, View, Dimensions } from "react-native";
 import React from "react";
 import { colors, parameters } from "../global/styles";
 import MapComponent from "../components/MapComponent";
-import { Avatar, Icon } from "react-native-elements";
+import { Icon } from "react-native-elements";
 import Button from "../components/Button";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
