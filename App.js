@@ -15,7 +15,6 @@ import ProfileScreen from "./src/Screens/ProfileScreen";
 import { colors } from "./src/global/styles";
 import LoginScreen from "./src/Screens/LoginScreen";
 import SignupScreen from "./src/Screens/SignupScreen";
-import WelcomeScreen from "./src/Screens/WelcomeScreen";
 import { Colors } from "./src/constants/styles";
 import AuthContextProvider, { AuthContext } from "./store/auth-context";
 import IconButton from "./src/components/ui/IconButton";
