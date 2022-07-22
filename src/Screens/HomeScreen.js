@@ -9,21 +9,24 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { colors, parameters } from "../global/styles";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Icon } from "react-native-elements";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { StatusBar } from "expo-status-bar";
 import { filterData, carsAround } from "../global/data";
-import { mapStyle } from "../global/mapStyle";
 import * as Location from "expo-location";
+import IconButton from "../components/ui/IconButton";
+import { AuthContext } from "../../store/auth-context";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-let position
+let position;
 
 const HomeScreen = ({ navigation }) => {
   const [latlng, setLatlng] = useState({});
-  position = latlng
+  const authCtx = useContext(AuthContext);
+
+  position = latlng;
 
   const checkPermissions = async () => {
     const hasPermission = await Location.requestForegroundPermissionsAsync();
@@ -70,13 +73,21 @@ const HomeScreen = ({ navigation }) => {
             size={40}
           />
         </View>
+        <View style={styles.icon2}>
+          <IconButton
+            icon="exit"
+            color={colors.black}
+            size={36}
+            onPress={authCtx.logout}
+          />
+        </View>
       </View>
       <ScrollView bounces={false}>
         <View style={styles.home}>
           {/* <Text style={styles.text1}>Select your destination</Text> */}
           <View style={styles.view1}>
             <View style={styles.view8}>
-              <Text style={styles.text22}>Welcome to Freight</Text>
+              <Text style={styles.text22}>Welcome to Safirisha</Text>
               <Text style={styles.text2}>
                 Transport your lugguages hustle free
               </Text>
@@ -200,7 +211,6 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 export const currentLocation = position;
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -242,6 +252,7 @@ const styles = StyleSheet.create({
   text22: {
     color: "gold",
     fontSize: 18,
+    fontWeight: "bold",
   },
 
   view1: {
@@ -346,6 +357,10 @@ const styles = StyleSheet.create({
   icon1: {
     marginLeft: 10,
     marginTop: 5,
+  },
+  icon2: {
+    marginLeft: 300,
+    marginTop: -45,
   },
   view8: {
     flex: 4,

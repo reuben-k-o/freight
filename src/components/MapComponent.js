@@ -1,5 +1,5 @@
 import { Text, StyleSheet, View, ActivityIndicator } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Marker } from "react-native-maps";
 import Constants from "expo-constants";
 import { io } from "socket.io-client";
@@ -25,6 +25,7 @@ export default function MapComponent() {
     driverIsOnTheWay: false,
   });
   const mapRef = useRef(null);
+
   Geocoder.init(GOOGLE_PLACES_APIKEY);
 
   const moveTo = async (position) => {
