@@ -10,7 +10,6 @@ import AppLoading from "expo-app-loading";
 
 import HomeScreen from "./src/Screens/HomeScreen";
 import RequestScreen from "./src/Screens/RequestScreen";
-import DestinationScreen from "./src/Screens/DestinationScreen";
 import ProfileScreen from "./src/Screens/ProfileScreen";
 import { colors } from "./src/global/styles";
 import LoginScreen from "./src/Screens/LoginScreen";
@@ -42,9 +41,8 @@ function AuthenticatedStack() {
   return (
     <Drawer.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: "#351401" },
+        headerStyle: { backgroundColor: colors.blue },
         // headerTintColor: "white",
-        sceneContainerStyle: { backgroundColor: colors.blue },
         drawerContentStyle: { backgroundColor: colors.white },
         drawerInactiveTintColor: colors.black,
         drawerActiveTintColor: colors.white,
@@ -100,69 +98,6 @@ function AuthenticatedStack() {
     </Drawer.Navigator>
   );
 }
-
-// export function DrawerNavigator() {
-//   return (
-//     <Drawer.Navigator
-//       screenOptions={{
-//         headerStyle: { backgroundColor: "#351401" },
-//         // headerTintColor: "white",
-//         sceneContainerStyle: { backgroundColor: colors.blue },
-//         drawerContentStyle: { backgroundColor: colors.white },
-//         drawerInactiveTintColor: colors.black,
-//         drawerActiveTintColor: colors.white,
-//         drawerActiveBackgroundColor: colors.blue,
-//         drawerInactiveBackgroundColor: colors.primary,
-//       }}
-//     >
-//       <Drawer.Screen
-//         name="HomeScreen"
-//         component={HomeScreen}
-//         options={{
-//           title: "Home",
-//           drawerIcon: ({ focussed, size }) => (
-//             <Ionicons name="home" color={colors.black} size={size} />
-//           ),
-//           headerRight: ({ tintColor }) => (
-//             <IconButton
-//               icon="exit"
-//               color={tintColor}
-//               size={24}
-//               onPress={authCtx.logout}
-//             />
-//           ),
-//           headerShown: false,
-//         }}
-//       />
-//       <Drawer.Screen
-//         name="RequestScreen"
-//         component={RequestScreen}
-//         options={{
-//           title: "Request Truck",
-//           drawerIcon: ({ focussed, size }) => (
-//             <Fontisto name="truck" size={size} color={colors.black} />
-//           ),
-//           headerShown: false,
-//         }}
-//       />
-//       <Drawer.Screen
-//         name="Profile"
-//         component={ProfileScreen}
-//         options={{
-//           title: "Profile",
-//           drawerIcon: ({ size, focussed }) => (
-//             <Ionicons
-//               name="person"
-//               size={size}
-//               color={focussed ? colors.white : colors.black}
-//             />
-//           ),
-//           headerShown: false,
-//         }}
-//       />
-//     </Drawer.Navigator>
-//   );
-// }
 
 function Navigation() {
   const authCtx = useContext(AuthContext);
